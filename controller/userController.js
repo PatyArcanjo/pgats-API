@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const userService = require('../service/userService');
+const jwt = require('jsonwebtoken');
+const SECRET = process.env.JWT_SECRET || 'segredo_super_secreto';
 
 router.post('/register', (req, res) => {
   const { username, password, favorecidos } = req.body;
@@ -18,7 +20,9 @@ router.post('/login', (req, res) => {
   if (!username || !password) return res.status(400).json({ error: 'Usuário e senha obrigatórios' });
   try {
     const user = userService.loginUser({ username, password });
-    res.json(user);
+    // Gera o token JWT
+    const token = jwt.sign({ username: user.username }, SECRET, { expiresIn: '1h' });
+    res.json({ token, user });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

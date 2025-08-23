@@ -70,14 +70,20 @@ describe('Transfer Controller', () => {
             expect(resposta.status).to.equal(201);
             
             // Um expect para comparar a Resposta.body com a String contida no arquivo
-            expect(resposta.body).to.have.property('from', 'julio');
-            expect(resposta.body).to.have.property('to', 'priscila');
-            expect(resposta.body).to.have.property('value', 100);
+             //expect(resposta.body).to.have.property('from', 'julio');
+             //expect(resposta.body).to.have.property('to', 'priscila');
+             //expect(resposta.body).to.have.property('value', 100);
 
-            console.log(resposta.body)
+             //validacao com fixture
+             const respostaEsperada = require('../fixture/respostas/quandoInformoValoresValidosEuTenhoSucessoCom201Created.json');
+             delete resposta.body.date; // removo o campo dinamico
+             delete respostaEsperada.date; // removo o campo dinamico
+             expect(resposta.body).to.deep.equal(respostaEsperada);
+
+             console.log(resposta.body)
 
             // Reseto o Mock
-            sinon.restore();
+           // sinon.restore();
         });
     });
 
