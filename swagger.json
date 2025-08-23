@@ -14,9 +14,6 @@
       }
     }
   },
-  "security": [
-    { "bearerAuth": [] }
-  ],
   "paths": {
     "/users/register": {
       "post": {

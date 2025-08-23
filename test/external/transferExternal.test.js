@@ -5,7 +5,7 @@ const { expect } = require('chai');
 // Testes
 describe('Transfer', () => {
     describe('POST /transfers', () => {
-        it.only('Quando informo remetente e destinatario inexistentes recebo 400', async () => {
+        it('Quando informo remetente e destinatario inexistentes recebo 400', async () => {
 
             // 1) capturar o token 
             const respostaLogin = await request('http://localhost:3000')
@@ -15,8 +15,8 @@ describe('Transfer', () => {
                     password: "123456"
                 });
 
-                const token = respostaLogin.body.token; // nao é necessário, pode ser usado diretamente na linha
-                console.log(token);
+                const token = respostaLogin.body.token; // nao é necessário, pode ser usado diretamente na linha 24
+                console.log(token); //imprime o token para verificar se está correto
 
             // 2) realizar a transferência
             const resposta = await request('http://localhost:3000')

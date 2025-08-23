@@ -12,9 +12,25 @@ const transferService = require('../../service/transferService');
 // Testes
 describe('Transfer Controller', () => {
     describe('POST /transfers', () => {
+
+        beforeEach(async() => {    // capturar o token 
+              const respostaLogin = await request(app)
+                .post('/users/login')
+                .send({
+                       username: "julio",
+                       password: "123456"
+            });
+            token = respostaLogin.body.token; // armazeno o token na variavel global
+           // console.log(token); //imprime o token para verificar se está correto
+        })
+
         it('Quando informo remetente e destinatario inexistentes recebo 400', async () => {
+
+           // 2) realizar a transferência
             const resposta = await request(app)
                 .post('/transfers')
+                //.set('authorization', `Bearer ${token}`) //usando a variavel token
+                .set('authorization', `Bearer ${token}`) // usando diretamente o token
                 .send({
                     from: "julio",
                     to: "priscila",
@@ -32,6 +48,7 @@ describe('Transfer Controller', () => {
 
             const resposta = await request(app)
                 .post('/transfers')
+                .set('authorization', `Bearer ${token}`)
                 .send({
                     from: "julio",
                     to: "priscila",
@@ -61,6 +78,7 @@ describe('Transfer Controller', () => {
 
             const resposta = await request(app)
                 .post('/transfers')
+                .set('authorization', `Bearer ${token}`)
                 .send({
                     from: "julio",
                     to: "priscila",
@@ -80,10 +98,10 @@ describe('Transfer Controller', () => {
              delete respostaEsperada.date; // removo o campo dinamico
              expect(resposta.body).to.deep.equal(respostaEsperada);
 
-             console.log(resposta.body)
+            // console.log(resposta.body)
 
             // Reseto o Mock
-           // sinon.restore();
+            sinon.restore();
         });
     });
 
