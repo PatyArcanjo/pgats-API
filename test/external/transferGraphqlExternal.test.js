@@ -7,7 +7,7 @@ describe('GraphQL Transfer Mutation', () => {
     let token;
 
     before(async () => {
-        // Garante usuário e saldo para test
+        // Garante usuário e saldo para teste
         await request(graphqlUrl)
             .post('/')
             .send({
@@ -55,7 +55,7 @@ describe('GraphQL Transfer Mutation', () => {
             .send({
                 query: `mutation { createTransfer(from: "julio", to: "priscila", value: 10) { from to value date } }`
             });
-        expect(res.status).to.be.oneOf([200, 401, 403]);
+        expect(res.status).to.be.oneOf([401, 403]);
         expect(res.body.errors).to.be.an('array');
         expect(res.body.errors[0].message).to.match(/token/i);
     });
