@@ -5,7 +5,7 @@ const { expect } = require('chai');
 // Testes REST já existentes
 describe('Transfer', () => {
     describe('POST /transfers', () => {
-        it.only('Quando informo remetente e destinatario inexistentes recebo 400', async () => {
+        it('Quando informo remetente e destinatario inexistentes recebo 400', async () => {
             // 1) capturar o token 
             const respostaLogin = await request('http://localhost:3000')
                 .post('/users/login')

@@ -7,11 +7,11 @@ describe('GraphQL Transfer Mutation', () => {
     let token;
 
     before(async () => {
-        // Garante usuário e saldo para teste
+        // Garante usuário e saldo para test
         await request(graphqlUrl)
             .post('/')
             .send({
-                query: `mutation { register(username: "julio", password: "123456", favorecidos: ["priscila"]) { username } }`
+                query: `mutation { register(username: "julio", password: "123456", favorecidos: ["priscila"]) { username saldo } }`
             });
         await request(graphqlUrl)
             .post('/')
@@ -38,7 +38,7 @@ describe('GraphQL Transfer Mutation', () => {
     });
 
     it('Sem saldo disponível para transferência', async () => {
-        // Supondo que o saldo inicial é 0, tente transferir valor alto
+        // tente transferir valor alto, saldo inicial é de 
         const res = await request(graphqlUrl)
             .post('/')
             .set('Authorization', `Bearer ${token}`)
